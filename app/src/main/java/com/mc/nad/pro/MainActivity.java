@@ -1,16 +1,12 @@
 package com.mc.nad.pro;
 
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 
 import java.net.MalformedURLException;
 
@@ -30,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The view to show the ad.
      */
-    private static Toolbar mToolbar;
+    private static Toolbar toolbar;
 
 
     /* Your ad unit id. Replace with your actual ad unit id. */
@@ -40,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // toolbar
-        setUpToolbar();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            // Hide back on ActionBar
+            toolbar.setNavigationIcon(R.drawable.ic_action_navigation_arrow_back);
+        }
+        setToolbarColors(R.color.color_primary, R.color.color_primary_dark);
 
         // WebView Instance
         webView = (WebView) findViewById(R.id.webView);
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                getSupportActionBar().setTitle(view.getTitle());
+                toolbar.setTitle(view.getTitle());
 
                 URL urls;
                 try {
@@ -64,37 +65,25 @@ public class MainActivity extends AppCompatActivity {
                             urls.getPath().lastIndexOf("/") + 1);
                     if (fileName != "index.html") {
                         // show back on ActionBar
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                        toolbar.setNavigationIcon(R.drawable.ic_action_navigation_arrow_back);
                     } else {
                         // hide back on ActionBar
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                        toolbar.setNavigationIcon(R.drawable.ic_action_navigation_arrow_back);
                     }
                 } catch (MalformedURLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
             }
         });
-
-    }
-
-    private void setUpToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-            // Hide back on ActionBar
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        }
-        setToolbarColors(R.color.color_primary, R.color.color_primary_dark);
     }
 
     public void setToolbarColors(int primaryColor, int primaryDarkColor) {
-        mToolbar.setBackgroundColor(getResources().getColor(primaryColor));
+        toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), primaryColor));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // set colorPrimaryDark
-            getWindow().setStatusBarColor(getResources().getColor(primaryDarkColor));
-            getWindow().setNavigationBarColor(getResources().getColor(primaryColor));
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), primaryDarkColor));
+            getWindow().setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), primaryColor));
         }
     }
 
