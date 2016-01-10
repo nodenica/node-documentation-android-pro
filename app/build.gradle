@@ -8,8 +8,8 @@ android {
         applicationId "com.mc.nad.pro"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 52001
-        versionName "5.2.0"
+        versionCode 54000
+        versionName "5.4.0"
     }
     buildTypes {
         release {
