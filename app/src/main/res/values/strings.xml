@@ -16,6 +16,7 @@
 
     <!-- progress -->
     <string name="progress_sync">Check for updates</string>
+    <string name="progress_loading_module_page">Loading module page</string>
 
     <!-- navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

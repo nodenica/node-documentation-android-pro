@@ -17,7 +17,7 @@ import com.mc.nad.pro.api.DownloadDocs;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ModuleActivity extends AppCompatActivity {
+public class ModuleActivity extends BaseActivity {
 
     public static final String EXTRA_TITLE = "title";
     public static final String EXTRA_NAME = "name";
@@ -25,8 +25,6 @@ public class ModuleActivity extends AppCompatActivity {
     @BindView(R.id.webView)
     WebView webView;
 
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +44,7 @@ public class ModuleActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
 
-        progressBar.setProgress(0);
-        progressBar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        showProgressDialog(R.string.progress_loading_module_page);
 
         // init webView
         initWebView(name);
@@ -58,9 +55,8 @@ public class ModuleActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                progressBar.setProgress(newProgress);
                 if (newProgress == 100) {
-                    progressBar.setVisibility(View.GONE);
+                    hideProgressDialog();
                 }
             }
         });

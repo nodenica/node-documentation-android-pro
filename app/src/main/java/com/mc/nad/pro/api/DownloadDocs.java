@@ -16,7 +16,7 @@ import okhttp3.Response;
 
 public class DownloadDocs extends AsyncTask<String, Void, Boolean> {
 
-    private static final String DIRECTORY_FILES = "Android/data/com.mc.nad.pro/files/docs";
+    private static final String DIRECTORY_FILES = "Android/data/com.mc.nad/files/docs";
 
     private static AdapterListener adapterListener;
 
